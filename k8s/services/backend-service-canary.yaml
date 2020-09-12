@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: covid19info-backend-service-canary
+  namespace: spinnaker
+  name: covid19info-backend-service-canary
+spec:
+  ports:
+    - name: 8080-8081
+      port: 8080
+      targetPort: 8081
+      protocol: TCP
+  selector:
+    role: backend
+    app: covid19info
+    env: canary
+  sessionAffinity: None
+  type: NodePort

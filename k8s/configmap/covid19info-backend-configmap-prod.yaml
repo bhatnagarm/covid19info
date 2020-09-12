@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2020-09-05T15:15:28Z
+  name: covid19info-backend-configmap
+data:
+  jasypt.encryptor.password: covidpassword
+  spring.profiles.active: prod
