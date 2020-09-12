@@ -1,2 +1,27 @@
 # Covid 19 Info App
 This is the initial version of a covid 19 Info app. Build and approved for containerize.
+
+### Application uses 
+* Spring-boot 2.3
+* Jdk 14
+* Jenkins Kuberneties Agent
+* Kubernetes
+
+
+### Starting the application
+    mvn clean verify
+    docker build -t localhost:5000/covid19info .
+    docker push localhost:5000/covid19info
+    kubectl apply -f k8s/configmap/covid19info-backend-configmap.yaml
+    kubectl apply -f k8s/backend-production.yaml
+Is Istio enabled 
+    
+    kubectl apply -f <(istioctl kube-inject -f k8s/backend-production.yaml)
+    kubectl apply -f k8s/services/backend-service-production.yaml
+
+### Config management and security
+It is always better to get the developers to have configuration where they can use it comfortably. So this application 
+keeps the secrets in configuration. Just encrypt it using a secret different in each environment. Keep these away from 
+developers to secure environments. We are using jaspt to encrypt secret. You cannot run the app if you don't have the 
+password. I'm using configmap to keep the main password but you can secure it using Vault or any other password 
+kubernetes secret products. 
