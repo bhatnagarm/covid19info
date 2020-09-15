@@ -1,15 +1,17 @@
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: covid19info-backend
+  name: covid19info-v1
+  labels:
+    app: covid19info
+    version: v1
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
-      name: covid19info
       labels:
         app: covid19info
-        role: backend
+        version: v1
         env: production
     spec:
       containers:
@@ -45,8 +47,7 @@ spec:
                   name: covid19info-backend-configmap
                   key: JASYPT_ENCRYPTOR_PASSWORD
           ports:
-            - name: backend
-              containerPort: 8080
+            - containerPort: 8080
       terminationGracePeriodSeconds: 5
   selector:
     matchLabels:

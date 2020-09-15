@@ -1,18 +1,16 @@
 kind: Service
 apiVersion: v1
 metadata:
-  labels:
-    app: covid19info-backend-service-production
   namespace: default
-  name: covid19info-backend-service-production
+  name: covid19info
+  labels:
+    app: covid19info
+    service: covid19info
 spec:
   ports:
-    - name: 8080-8081
-      port: 8080
-      protocol: TCP
-      targetPort: 8081
+    - name: 8081-8080
+      port: 8081
   selector:
-    role: backend
     app: covid19info
   sessionAffinity: None
-  type: LoadBalancer
+  type: ClusterIP
