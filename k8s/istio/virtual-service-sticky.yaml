@@ -1,0 +1,32 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: covid19info
+  namespace: default
+spec:
+  hosts:
+    - covid19info.default.svc.cluster.local
+  http:
+    - route:
+        - destination:
+            host: covid19info.default.svc.cluster.local
+            subset: all-covid19info-pods
+
+---
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: covid19info
+  namespace: default
+spec:
+  host: covid19info.default.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpHeaderName: "myHeader" # This needs to be propagated through the whole flow
+#        useSourceIp: true
+  subsets:
+    - labels:
+        app: covid19info
+      name: all-covid19info-pods
+

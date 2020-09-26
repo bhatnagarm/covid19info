@@ -1,0 +1,34 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: covid19info
+  namespace: default
+spec:
+  hosts:
+    - covid19info.default.svc.cluster.local
+  http:
+    - route:
+        - destination:
+            host: covid19info.default.svc.cluster.local
+            subset: 1-0-0-snapshot
+          weight: 0
+        - destination:
+            host: covid19info.default.svc.cluster.local
+            subset: 1-0-1-snapshot
+          weight: 100
+
+---
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: covid19info
+  namespace: default
+spec:
+  host: covid19info.default.svc.cluster.local
+  subsets:
+    - labels:
+        version: 1-0-0-snapshot
+      name: 1-0-0-snapshot
+    - labels:
+        version: 1-0-1-snapshot
+      name: 1-0-1-snapshot

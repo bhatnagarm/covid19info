@@ -10,7 +10,7 @@ This is the initial version of a covid 19 Info app. Build and approved for conta
 
 ### Starting the application
     mvn clean verify
-    docker build -t localhost:5000/covid19info .
+    docker build -t localhost:5000/covid19info:1.0.0-SNAPSHOT .
     docker push localhost:5000/covid19info
     kubectl apply -f k8s/configmap/covid19info-backend-configmap.yaml
     kubectl apply -f k8s/backend-production.yaml

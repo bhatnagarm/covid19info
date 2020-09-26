@@ -1,22 +1,79 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: covid19info-v1
+  name: covid19info-1-0-0-snapshot
   labels:
     app: covid19info
-    version: v1
+    version: 1-0-0-snapshot
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
         app: covid19info
-        version: v1
+        version: 1-0-0-snapshot
         env: production
     spec:
       containers:
         - name: covid19info
-          image: localhost:5000/covid19info
+          image: localhost:5000/covid19info:1.0.0-SNAPSHOT
+          #          resources:
+          #            limits:
+          #              memory: "500Mi"
+          #              cpu: "100m"
+          imagePullPolicy: Always
+          readinessProbe:
+            # Readiness probe is used to check if this app is ready to serve traffic.
+            httpGet:
+              port: 8080
+              path: /actuator/health/readiness
+            initialDelaySeconds: 10
+          livenessProbe:
+            # Liveness probe is used to check if this app is responding to requests
+            # (after it is marked as "ready").
+            httpGet:
+              port: 8080
+              path: /actuator/health/liveness
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          env:
+            - name: COMPONENT
+              value: backend
+            - name: VERSION
+              value: production
+            - name: jasypt.encryptor.password
+              valueFrom:
+                configMapKeyRef:
+                  name: covid19info-backend-configmap
+                  key: JASYPT_ENCRYPTOR_PASSWORD
+          ports:
+            - containerPort: 8080
+      terminationGracePeriodSeconds: 5
+  selector:
+    matchLabels:
+      app: covid19info
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid19info-1-0-1-snapshot
+  labels:
+    app: covid19info
+    version: 1-0-1-snapshot
+spec:
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: covid19info
+        version: 1-0-1-snapshot
+        env: production
+    spec:
+      containers:
+        - name: covid19info
+          image: localhost:5000/covid19info:1.0.0-SNAPSHOT
           #          resources:
           #            limits:
           #              memory: "500Mi"
