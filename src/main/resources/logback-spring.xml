@@ -16,7 +16,7 @@
     </root>
 
     <!-- LOG "com.techartworks.covid.*" at TRACE level -->
-    <logger name="com.techartworks.covid" level="INFO" additivity="false">
+    <logger name="com.techartworks.covid" level="DEBUG" additivity="false">
         <appender-ref ref="Console" />
     </logger>
 
