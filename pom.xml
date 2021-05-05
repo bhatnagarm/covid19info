@@ -15,7 +15,7 @@
 	<description>Spring Boot API to get covid information</description>
 
 	<properties>
-		<java.version>14</java.version>
+		<java.version>16</java.version>
 		<release.train.version>2020.0.0</release.train.version>
 	</properties>
 
@@ -50,6 +50,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.18.20</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>

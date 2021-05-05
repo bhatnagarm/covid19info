@@ -27,6 +27,11 @@ public class CovidController {
         this.covidConfigProperties = covidConfigProperties;
     }
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello World" ;
+    }
+
     @GetMapping("/covidinfo")
     public CountryInfo[] covidInfo() {
         log.warn("Call to Covid Rest API");
